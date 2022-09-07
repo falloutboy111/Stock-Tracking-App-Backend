@@ -4,6 +4,7 @@ namespace App\Http\Requests\Staff;
 
 use App\Models\Brand;
 use App\Models\Store;
+use App\Models\UserType;
 use App\Rules\UsernameUniqueRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -44,7 +45,7 @@ class CreateRequest extends FormRequest
             "brands.*" => ["required", "uuid", Rule::exists(Brand::class, "uuid")],
             "stores" => ["nullable", "array"],
             "stores.*" => ["required", "uuid", Rule::exists(Store::class, "uuid")],
-            "user_type" => "required|array|in:manager,staff"
+            "user_type_uuid" => ["required", "uuid", Rule::exists(UserType::class, "uuid")]
         ];
     }
 }

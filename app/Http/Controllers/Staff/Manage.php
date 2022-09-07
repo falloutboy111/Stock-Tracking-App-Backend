@@ -19,7 +19,7 @@ class Manage extends Controller
      */
     public function index()
     {
-        return response(Staff::get());
+        return response(StaffResource::collection(Staff::get()));
     }
 
     /**
@@ -40,7 +40,9 @@ class Manage extends Controller
 
         $staff->assignRole("staff");
 
-        if ($validated["stores"]) {
+        $stores = $validated["stores"] ?? null;
+
+        if ($stores) {
             $staff->store()->attach($validated["stores"]);
         }
 
@@ -81,17 +83,20 @@ class Manage extends Controller
 
         $staff->update($validated);
 
-        if ($validated["brands"]) {
+        $brands = $validated["brands"] ?? null;
+        $stores = $validated["stores"] ?? null;
+
+        if ($brands) {
             $staff->brand()->detach();
 
             $staff->brand()->attach($validated["brands"]);
         }
 
-        if ($validated["stores"]) {
+        if ($stores) {
             $staff->store()->detach();
 
             $staff->store()->attach($validated["stores"]);
-        } elseif (!filled($validated["stores"])) {
+        } elseif (!filled($stores)) {
             $staff->store()->detach();
         }
 

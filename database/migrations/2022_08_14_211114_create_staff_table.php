@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string("username");
             $table->text("password");
             $table->string("employee_id")->nullable();
-            $table->enum("user_type", ["manager", "staff"]);
+            $table->foreignUuid("user_type_uuid")->index();
             $table->timestamps();
         });
     }

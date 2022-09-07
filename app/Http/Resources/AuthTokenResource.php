@@ -17,6 +17,7 @@ class AuthTokenResource extends JsonResource
         return [
             "name" => $this->name,
             "brands" => $this->brand,
+            "user_type" => $this->user_type
         ];
     }
 }

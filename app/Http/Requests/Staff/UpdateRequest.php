@@ -5,6 +5,7 @@ namespace App\Http\Requests\Staff;
 use App\Models\Brand;
 use App\Models\Staff;
 use App\Models\Store;
+use App\Models\UserType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -43,6 +44,7 @@ class UpdateRequest extends FormRequest
             "brands.*" => ["required", "uuid", Rule::exists(Brand::class, "uuid")],
             "stores" => ["nullable", "array"],
             "stores.*" => ["required", "uuid", Rule::exists(Store::class, "uuid")],
+            "user_type_uuid" => ["nullable", "uuid", Rule::exists(UserType::class, "uuid")]
         ];
     }
 

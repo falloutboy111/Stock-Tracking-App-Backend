@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return Brand::get();
     }
+
+    public function getUserTypeAttribute()
+    {
+        return UserType::get();
+    }
 }

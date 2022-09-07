@@ -16,11 +16,13 @@ class StaffResource extends JsonResource
     {
         return [
             "uuid" => $this->uuid,
+            "username" => $this->username,
             "first_name" => $this->first_name,
             "last_name" => $this->last_name,
             "employee_id" => $this->employee_id,
             "store" => $this->store,
-            "brand" => $this->brand,
+            "brands" => $this->brand,
+            "user_type_uuid" => $this->user_type_uuid,
         ];
     }
 }

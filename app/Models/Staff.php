@@ -19,7 +19,7 @@ class Staff extends Model
         'employee_id',
         "username",
         "password",
-        "user_type"
+        "user_type_uuid"
     ];
 
     protected $guard_name = 'web';
