@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Test;
 
 use App\Models\Test;
+use App\Models\UserType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -27,8 +28,8 @@ class CreateRequest extends FormRequest
     {
         return [
             "name" => ["required", "string", Rule::unique(Test::class)],
-            "allocated_users" => ["required", "array"],
-            "allocated_users.*" => ["required", "string", Rule::in(["brand-manager", "admin", "manager", "staff"])]
+            "user_types" => ["required", "array"],
+            "user_types.*" => ["required", "uuid", Rule::exists(UserType::class, "uuid")]
         ];
     }
 }

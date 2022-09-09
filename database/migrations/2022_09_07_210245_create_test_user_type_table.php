@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tests', function (Blueprint $table) {
+        Schema::create('test_user_type', function (Blueprint $table) {
             $table->id();
-            $table->uuid()->index()->OnDelete('restrict');
-            $table->text("name");
-            $table->integer("total")->default(0);
+            $table->uuid('test_uuid');
+            $table->uuid('user_type_uuid');
+            $table->foreign('test_uuid')->references('uuid')->on('tests');
+            $table->foreign('user_type_uuid')->references('uuid')->on('user_types');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tests');
+        Schema::dropIfExists('test_user_type');
     }
 };

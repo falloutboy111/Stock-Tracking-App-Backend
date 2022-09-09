@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Test;
 
 use App\Models\Test;
+use App\Models\UserType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -35,8 +36,8 @@ class UpdateRequest extends FormRequest
     {
         return [
             "name" => ["nullable", "string", Rule::unique(Test::class)->whereNot("name", request("name"))],
-            "allocated_users" => ["nullable"],
-            "allocated_users.*" => ["required", "string", Rule::in(["brand-manager", "admin", "manager", "staff"])]
+            "user_types" => ["nullable"],
+            "user_types.*" => ["required", "uuid", Rule::exists(UserType::class, "uuid")]
         ];
     }
 

@@ -33,6 +33,12 @@ class TestController extends Controller
         
         $test = Test::create($validated);
 
+        $user_type = $validated["user_type"] ?? null;
+
+        if ($user_type) {
+            $test->user_type()->attach($validated["user_type"]);
+        }
+
         return response(new TestResource($test), 201);
     }
 
@@ -64,7 +70,18 @@ class TestController extends Controller
     {
         $validated = $request->validated();
 
+        $test = $request->test_object();
+
         $request->test_object()->update($validated);
+
+        $user_type = $validated["user_types"] ?? null;
+
+        if ($user_type) {
+            $test->user_type()->detach();
+            $test->user_type()->attach($validated["user_types"]);
+        } elseif (!filled($user_type)) {
+            $test->user_type()->detach();
+        }
 
         return response(new TestResource(Test::find($request->test_object()->id)));
     }

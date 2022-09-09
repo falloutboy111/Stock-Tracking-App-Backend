@@ -18,7 +18,7 @@ class TestResource extends JsonResource
             "uuid" => $this->uuid,
             "name" => $this->name,
             "total" => $this->total,
-            "allocated_users" => $this->allocated_users,
+            "user_types" => $this->user_type,
             "test_question" => TestQuestionResource::collection($this->test_question),
         ];
     }

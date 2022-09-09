@@ -26,4 +26,9 @@ class Test extends Model
     {
         return $this->hasMany(TestQuestion::class, "test_uuid", "uuid");
     }
+
+    public function user_type()
+    {
+        return $this->belongsToMany(UserType::class, null, "test_uuid", "user_type_uuid", "uuid", "uuid", "uuid");
+    }
 }
