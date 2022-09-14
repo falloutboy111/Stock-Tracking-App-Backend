@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Test;
 
+use App\Http\Resources\TestQuestionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TestQuestionOptionResource extends JsonResource
+class SectionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +16,10 @@ class TestQuestionOptionResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "uuid" => $this->uuid,
-            "option" => $this->option,
-            "correct" => $this->correct,
+            "id" => $this->uuid,
+            "name" => $this->name,
+            "test" => $this->test,
+            "test_questions" => TestQuestionResource::collection($this->test_questions)
         ];
     }
 }

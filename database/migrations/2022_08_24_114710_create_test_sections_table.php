@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('test_question_options', function (Blueprint $table) {
+        Schema::create('test_sections', function (Blueprint $table) {
             $table->id();
             $table->uuid()->index();
-            $table->foreignUuid("test_question_uuid");
-            $table->text("option");
-            $table->boolean("correct");
-            $table->integer("order");
+            $table->text("name");
+            $table->uuid('test_uuid');
+            $table->foreign('test_uuid')->references('uuid')->on('tests');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_question_options');
+        Schema::dropIfExists('test_sections');
     }
 };

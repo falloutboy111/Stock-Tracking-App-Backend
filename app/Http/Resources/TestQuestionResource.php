@@ -19,7 +19,7 @@ class TestQuestionResource extends JsonResource
             "question" => $this->question,
             "type" => $this->type,
             "mark" => $this->mark,
-            "test_options" => TestQuestionOptionResource::collection($this->test_question_option),
+            "test_options" => TestQuestionOptionResource::collection($this->test_question_option->orderBy("order", "asc")),
         ];
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\Brand\Manage as BrandManage;
 use App\Http\Controllers\Staff\Manage;
+use App\Http\Controllers\Test\SectionController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestQuestionController;
 use App\Http\Resources\AuthTokenResource;
@@ -39,8 +40,9 @@ Route::post("/user/login", [AuthenticationController::class, "login"]);
 
 Route::group(['middleware' => ['role:super-admin|manager']], function () {
 
-    Route::apiResource("/mall", MallManage::class, ["only" => ["index", "show"]]);
-    Route::apiResource("/store", StoreManage::class, ["only" => ["index", "show"]]);
+    // Route::apiResource("/mall", MallManage::class, ["only" => ["index", "show"]]);
+    // Route::apiResource("/store", StoreManage::class, ["only" => ["index", "show"]]);
     
     Route::apiResource("/staff", Manage::class);
+    Route::apiResource("/elearn/{test_uuid}/test-section", SectionController::class)->middleware("test_uuid");
 });

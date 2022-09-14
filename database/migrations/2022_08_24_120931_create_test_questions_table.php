@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text("question");
             $table->enum("type", ["radio", "check", "text"]);
             $table->integer("mark");
+            $table->uuid('test_section_uuid');
+            $table->foreign('test_section_uuid')->references('uuid')->on('test_sections');
             $table->timestamps();
         });
     }

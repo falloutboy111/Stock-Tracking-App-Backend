@@ -10,9 +10,11 @@ class TestQuestionOption extends Model
     use HasFactory;
 
     protected $fillable = [
-        "test_question_id",
+        "uuid",
+        "test_question_uuid",
         "option",
-        "correct_option",
+        "order",
+        "correct",
     ];
 
     public function test_question()

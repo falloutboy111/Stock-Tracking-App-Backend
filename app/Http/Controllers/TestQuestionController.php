@@ -7,7 +7,9 @@ use App\Http\Requests\TestQuestion\CreateRequest;
 use App\Http\Requests\TestQuestion\UpdateRequest;
 use App\Http\Resources\TestQuestionResource;
 use App\Models\TestQuestion;
+use App\Models\TestQuestionOption;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TestQuestionController extends Controller
 {
@@ -32,6 +34,19 @@ class TestQuestionController extends Controller
         $validated = $request->validated();
 
         $test_question = TestQuestion::create($validated);
+
+        $option_create = [];
+
+        foreach ($validated["test_question_option"] as $test_question_option) {
+            $option_create[] = [
+                "uuid" => Str::uuid(),
+                "test_question_uuid" => $test_question->uuid,
+                "option" => $test_question_option["option"],
+                "correct" => $test_question_option["correct"],
+            ];
+        }
+
+        TestQuestionOption::insert($option_create);
 
         event(new TestQuestionEvent($validated));
 

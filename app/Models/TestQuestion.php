@@ -17,6 +17,7 @@ class TestQuestion extends Model
         "test_id",
         "mark",
         "test_uuid",
+        "test_section_uuid"
     ];
     
     public function test()

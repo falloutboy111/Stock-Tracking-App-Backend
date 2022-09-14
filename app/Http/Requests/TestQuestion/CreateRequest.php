@@ -29,6 +29,11 @@ class CreateRequest extends FormRequest
             "question" => ["required", "string"],
             "type" => ["required", "string", Rule::in(["radio", "check", "text"])],
             "mark" => ["required", "integer"],
+            "test_question_option" => ["required", "array"],
+            "test_question_option.*.option" => ["required", "string"],
+            "test_question_option.*.correct" => ["required", "boolean"],
+            "test_question_option.*.order" => ["required", "integer"],
+            "test_section_uuid" => ["required", "string"],
             "test_uuid" => ["required", Rule::exists(Test::class, "uuid")],
         ];
     }
