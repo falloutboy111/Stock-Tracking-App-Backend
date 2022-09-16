@@ -17,7 +17,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        if (!$test_question = TestQuestion::where(["uuid" => request("question")])->first()) {
+        if (!$test_question = TestQuestion::where(["uuid" => request("manage")])->first()) {
             return false;
         }
 
@@ -37,6 +37,10 @@ class UpdateRequest extends FormRequest
             "question" => ["required", "string"],
             "type" => ["required", "string", Rule::in(["radio", "check", "text"])],
             "mark" => ["required", "integer"],
+            "test_question_option" => ["nullable", "array"],
+            "test_question_option.*.option" => ["required", "string"],
+            "test_question_option.*.correct" => ["required", "boolean"],
+            "test_question_option.*.order" => ["required", "integer"],
         ];
     }
 

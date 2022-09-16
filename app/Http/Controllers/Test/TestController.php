@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Test;
 
+use App\Http\Controllers\Controller;
 use App\Events\TestQuestionEvent;
 use App\Http\Requests\Test\CreateRequest;
 use App\Http\Requests\Test\UpdateRequest;
@@ -30,13 +31,13 @@ class TestController extends Controller
     public function store(CreateRequest $request)
     {
         $validated = $request->validated();
-        
+
         $test = Test::create($validated);
 
-        $user_type = $validated["user_type"] ?? null;
+        $user_type = $validated["user_types"] ?? null;
 
         if ($user_type) {
-            $test->user_type()->attach($validated["user_type"]);
+            $test->user_type()->attach($validated["user_types"]);
         }
 
         return response(new TestResource($test), 201);

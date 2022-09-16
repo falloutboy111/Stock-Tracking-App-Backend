@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Learning;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TestQuestionResource extends JsonResource
+class ChapterResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,9 @@ class TestQuestionResource extends JsonResource
     {
         return [
             "uuid" => $this->uuid,
-            "question" => $this->question,
-            "type" => $this->type,
-            "mark" => $this->mark,
-            "test_options" => TestQuestionOptionResource::collection($this->test_question_option),
+            "title" => $this->title,
+            "module" => new ModuleResource($this->module),
+            "content" => ContentResource::collection($this->content),
         ];
     }
 }

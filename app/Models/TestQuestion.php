@@ -27,6 +27,6 @@ class TestQuestion extends Model
 
     public function test_question_option()
     {
-        return $this->hasMany(TestQuestionOption::class, "test_question_uuid", "uuid");
+        return $this->hasMany(TestQuestionOption::class, "test_question_uuid", "uuid")->orderBy("order", "asc");
     }
 }

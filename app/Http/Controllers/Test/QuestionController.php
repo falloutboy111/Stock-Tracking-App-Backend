@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Test;
 
+use App\Http\Controllers\Controller;
 use App\Events\TestQuestionEvent;
 use App\Http\Requests\TestQuestion\CreateRequest;
 use App\Http\Requests\TestQuestion\UpdateRequest;
@@ -11,7 +12,7 @@ use App\Models\TestQuestionOption;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class TestQuestionController extends Controller
+class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,6 +43,7 @@ class TestQuestionController extends Controller
                 "uuid" => Str::uuid(),
                 "test_question_uuid" => $test_question->uuid,
                 "option" => $test_question_option["option"],
+                "order" => $test_question_option["order"],
                 "correct" => $test_question_option["correct"],
             ];
         }
@@ -81,7 +83,27 @@ class TestQuestionController extends Controller
     {
         $validated = $request->validated();
 
-        $request->test_question_object()->update($validated);
+        $test_question = $request->test_question_object();
+
+        $test_question->update($validated);
+
+        $test_question_option = $validated["test_question_option"] ?? null;
+
+        if ($test_question_option) {
+            TestQuestionOption::where(["test_question_uuid" => $test_question->uuid])->delete();
+
+            foreach ($test_question_option as $test_question_option) {
+                $option_create[] = [
+                    "uuid" => Str::uuid(),
+                    "test_question_uuid" => $test_question->uuid,
+                    "option" => $test_question_option["option"],
+                    "order" => $test_question_option["order"],
+                    "correct" => $test_question_option["correct"],
+                ];
+            }
+
+            TestQuestionOption::insert($option_create);
+        }
 
         return response(new TestQuestionResource(TestQuestion::find($request->test_question_object()->id)));
     }
