@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('brand_manager', function (Blueprint $table) {
             $table->id();
-            $table->uuid();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->uuid('brand_uuid');
+            $table->uuid('admin_uuid');
+            $table->foreign('brand_uuid')->references('uuid')->on('brands');
+            $table->foreign('admin_uuid')->references('uuid')->on('admins');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('brand_manager');
     }
 };
