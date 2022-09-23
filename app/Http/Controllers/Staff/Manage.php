@@ -40,7 +40,9 @@ class Manage extends Controller
 
         $staff->assignRole("staff");
 
-        if ($validated["stores"]) {
+        $stores = $validated["stores"] ?? null;
+
+        if ($stores) {
             $staff->store()->attach($validated["stores"]);
         }
 
@@ -79,19 +81,30 @@ class Manage extends Controller
 
         $staff = $request->user_object();
 
+        $password = $validated["password"] ?? null;
+
+        if ($password) {
+            $validated["password"] = Hash::make($validated["password"]);
+        } else {
+            unset($validated["password"]);
+        }
+
         $staff->update($validated);
 
-        if ($validated["brands"]) {
+        $brands = $validated["brands"] ?? null;
+        $stores = $validated["stores"] ?? null;
+
+        if ($brands) {
             $staff->brand()->detach();
 
             $staff->brand()->attach($validated["brands"]);
         }
 
-        if ($validated["stores"]) {
+        if ($stores) {
             $staff->store()->detach();
 
             $staff->store()->attach($validated["stores"]);
-        } elseif (!filled($validated["stores"])) {
+        } elseif (!filled($stores)) {
             $staff->store()->detach();
         }
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Http\Resources\Brand\BrandResource;
+use App\Models\Brand;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AdminResource extends JsonResource
+class AuthResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,12 +16,16 @@ class AdminResource extends JsonResource
      */
     public function toArray($request)
     {
+
+        $brands = $this->brand;
+
+        if ($this->hasAnyRole(["super-admin"])) {
+            $brands = Brand::get();
+        }
+
         return [
-            "uuid" => $this->uuid,
-            "first_name" => $this->first_name,
-            "last_name" => $this->last_name,
-            "username" => $this->username,
-            "brands" => $this->brand,
+            "name" => $this->name,
+            "brands" => BrandResource::collection($brands),
         ];
     }
 }

@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stores', function (Blueprint $table) {
-            $table->id()->index();
-            $table->uuid()->index()->unique()->OnDelete('restrict');
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->uuid();
             $table->string("name");
-            $table->foreignUuid("product_group_uuid");
+            $table->string("barcode");
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stores');
+        Schema::dropIfExists('products');
     }
 };

@@ -1,6 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\Manage;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Brand\Manage as BrandManage;
+use App\Http\Controllers\Mall\Manage as MallManage;
+use App\Http\Controllers\Order\Manage as OrderManage;
+use App\Http\Controllers\Products\GroupManage;
+use App\Http\Controllers\Products\Manage as ProductsManage;
+use App\Http\Controllers\Staff\Manage as StaffManage;
+use App\Http\Controllers\Store\Manage as StoreManage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,19 +26,23 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['role:super-admin']], function () {
     Route::apiResource("/admin", Manage::class);
     Route::apiResource("/brand", BrandManage::class, ["only" => ["store", "update", "delete"]]);
-    Route::apiResource("/mall", MallManage::class, ["only" => ["store", "update", "delete"]]);
-    Route::apiResource("/store", StoreManage::class, ["only" => ["store", "update", "delete"]]);
 });
 
 
 
 Route::group(['middleware' => ['role:super-admin|admin']], function () {
 
-    Route::get("/admin/user", [Manage::class, "current_user"]);
-    Route::apiResource("/brand", BrandManage::class);
+    Route::get("/admin-user", [Manage::class, "current_user"]);
+    // Route::apiResource("/brand", BrandManage::class);
     Route::apiResource("/mall", MallManage::class);
     Route::apiResource("/store", StoreManage::class);
     Route::apiResource("/staff", StaffManage::class);
+    Route::apiResource("/product", ProductsManage::class);
+    Route::apiResource("/product-group", GroupManage::class);
+});
+
+Route::group(['middleware' => ['role:super-admin|admin|staff']], function () {
+    Route::apiResource("/order", OrderManage::class);
 });
 
 Route::post("/user/login", [AuthController::class, "login"]);

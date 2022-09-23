@@ -6,21 +6,17 @@ use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Mall extends Model
+class Product extends Model
 {
     use HasFactory;
     use Uuids;
 
-    protected $primaryKey = 'uuid';
-
-    protected $keyType = 'string';
-
     protected $fillable = [
-        "name"
+        "name",
+        "barcode",
+        "product_group_uuid"
     ];
 
-    public function store()
-    {
-        return $this->belongsToMany(Store::class);
-    }
+    protected $primaryKey = "uuid";
+    protected $keyType = "string";
 }

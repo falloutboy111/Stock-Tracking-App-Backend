@@ -18,6 +18,7 @@ class Store extends Model
     protected $fillable = [
         "name",
         "mall_id",
+        "product_group_uuid",
     ];
 
     public function mall()
@@ -28,5 +29,10 @@ class Store extends Model
     public function staff()
     {
         return $this->belongsToMany(Staff::class, null, "store_uuid", "staff_uuid", "uuid", "uuid", "uuid");
+    }
+
+    public function product_group()
+    {
+        return $this->belongsTo(ProductGroup::class);
     }
 }

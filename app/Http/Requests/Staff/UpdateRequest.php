@@ -5,6 +5,8 @@ namespace App\Http\Requests\Staff;
 use App\Models\Brand;
 use App\Models\Staff;
 use App\Models\Store;
+use App\Rules\UsernameUniqueRule;
+use App\Rules\UsernameUniqueUpdateRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -38,7 +40,15 @@ class UpdateRequest extends FormRequest
         return [
             "first_name" => ["nullable", "string"],
             "last_name" => ["nullable", "string"],
-            "employee_id" => ["nullable", "string"],
+            "username" => ["nullable", "string", new UsernameUniqueUpdateRule()],
+            "password" => [
+                "nullable", "string",
+                'min:10',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/',
+            ],
             "brands" => ["nullable", "array"],
             "brands.*" => ["required", "uuid", Rule::exists(Brand::class, "uuid")],
             "stores" => ["nullable", "array"],

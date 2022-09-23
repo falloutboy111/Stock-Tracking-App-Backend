@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stores', function (Blueprint $table) {
-            $table->id()->index();
-            $table->uuid()->index()->unique()->OnDelete('restrict');
-            $table->string("name");
-            $table->foreignUuid("product_group_uuid");
+        Schema::create('admin_store', function (Blueprint $table) {
+            $table->id();
+            $table->uuid('store_uuid');
+            $table->uuid('admin_uuid');
+            $table->foreign('store_uuid')->references('uuid')->on('stores');
+            $table->foreign('admin_uuid')->references('uuid')->on('admins');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stores');
+        Schema::dropIfExists('admin_store');
     }
 };

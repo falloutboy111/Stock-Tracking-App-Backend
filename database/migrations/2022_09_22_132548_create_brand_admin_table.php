@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('brand_manager', function (Blueprint $table) {
+        Schema::create('brand_admin', function (Blueprint $table) {
             $table->id();
             $table->uuid('brand_uuid');
             $table->uuid('admin_uuid');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('brand_manager');
+        Schema::dropIfExists('brand_admin');
     }
 };

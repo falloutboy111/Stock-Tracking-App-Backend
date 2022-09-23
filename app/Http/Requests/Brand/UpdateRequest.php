@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Brand;
 
-use App\Models\Admin;
 use App\Models\Brand;
-use App\Models\Store;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -19,7 +16,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        if (!$user = Admin::where(["uuid" => request("admin")])->first()) {
+        if (!$user = Brand::where(["uuid" => request("mall")])->first()) {
             return false;
         }
 
@@ -36,13 +33,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            "first_name" => ["nullable", "string"],
-            "last_name" => ["nullable", "string"],
-            "password" => ["nullable", "string"],
-            "brands" => ["nullable", "array"],
-            "brands.*" => ["required", "uuid", Rule::exists(Brand::class, "uuid")],
-            "stores" => ["nullable", "array"],
-            "stores.*" => ["required", "uuid", Rule::exists(Store::class, "uuid")],
+            "name" => ["nullable", "string"],
         ];
     }
 

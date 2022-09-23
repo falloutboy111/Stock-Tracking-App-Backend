@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Staff;
+namespace App\Http\Resources\ProductGroup;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class StaffResource extends JsonResource
+class ProductGroupResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,9 @@ class StaffResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "uuid" => $this->uuid,
-            "first_name" => $this->first_name,
-            "last_name" => $this->last_name,
-            "username" => $this->username,
-            "store" => $this->store,
-            "brands" => $this->brand,
+            "name" => $this->name,
+            "id" => $this->uuid,
+            "limit" => $this->limit
         ];
     }
 }

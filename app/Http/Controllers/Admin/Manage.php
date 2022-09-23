@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateRequest;
 use App\Http\Requests\Admin\UpdateRequest;
 use App\Http\Resources\Admin\AdminResource;
+use App\Http\Resources\Admin\AuthResource;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -41,6 +42,9 @@ class Manage extends Controller
 
         $user->assignRole("admin");
 
+        $user->brand()->attach($validated["brands"]);
+        $user->store()->attach($validated["stores"]);
+
         return response(new AdminResource($user), 201);
     }
 
@@ -75,8 +79,24 @@ class Manage extends Controller
         }
 
         $user = $request->user_object();
+        $stores = $validated["stores"] ?? null;
+        $brands = $validated["brands"] ?? null;
 
         $user->update($validated);
+
+        if ($brands) {
+            $user->brand()->detach();
+
+            $user->brand()->attach($brands);
+        }
+
+        if ($stores) {
+            $user->store()->detach();
+
+            $user->store()->attach($validated["stores"]);
+        } elseif (!filled($validated["stores"])) {
+            $user->store()->detach();
+        }
 
         return response(new AdminResource($user));
     }
@@ -102,6 +122,6 @@ class Manage extends Controller
 
     public function current_user(Request $request)
     {
-        return new AdminResource($request->user());
+        return response(new AuthResource($request->user));
     }
 }

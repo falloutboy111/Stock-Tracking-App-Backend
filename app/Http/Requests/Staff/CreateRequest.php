@@ -30,7 +30,6 @@ class CreateRequest extends FormRequest
         return [
             "first_name" => ["required", "string"],
             "last_name" => ["nullable", "string"],
-            "employee_id" => ["required", "string"],
             "username" => ["required", "string", new UsernameUniqueRule()],
             "password" => [
                 "required", "string",
@@ -42,7 +41,7 @@ class CreateRequest extends FormRequest
             ],
             "brands" => ["required", "array"],
             "brands.*" => ["required", "uuid", Rule::exists(Brand::class, "uuid")],
-            "stores" => ["nullable", "array"],
+            "stores" => ["required", "array"],
             "stores.*" => ["required", "uuid", Rule::exists(Store::class, "uuid")],
         ];
     }
