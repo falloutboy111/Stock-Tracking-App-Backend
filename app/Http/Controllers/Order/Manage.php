@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\CreateRequest;
+use App\Http\Requests\Order\UpdateRequest;
 use App\Http\Resources\Order\OrderResource;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class Manage extends Controller
 {
@@ -17,7 +20,7 @@ class Manage extends Controller
      */
     public function index()
     {
-        return OrderResource::collection(Order::get());
+        return response(OrderResource::collection(Order::get()));
     }
 
     /**
@@ -28,7 +31,21 @@ class Manage extends Controller
      */
     public function store(CreateRequest $request)
     {
-        //
+        $validated = collect($request->validated());
+
+        $order = Order::create($validated->except("order_items")->toArray());
+
+        $order_items = collect($validated["order_items"])->transform(function ($order_item, $value) use (&$order)
+        {
+            return array_merge([
+                "uuid" => Str::uuid(),
+                "order_uuid" => $order->uuid
+            ], $order_item);
+        })->toArray(); 
+    
+        OrderItem::insert($order_items);
+
+        return response(new OrderResource($order), 201);
     }
 
     /**
@@ -39,7 +56,11 @@ class Manage extends Controller
      */
     public function show($id)
     {
-        //
+        if (!$order = Order::find($id)) {
+            return response("Record not found", 410);
+        }
+
+        return response(new OrderResource($order), 200);
     }
 
     /**
@@ -49,19 +70,14 @@ class Manage extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
-    }
+        $validated = $request->validated();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $order = $request->order;
+
+        $order->update($validated);
+
+        return response("");
     }
 }

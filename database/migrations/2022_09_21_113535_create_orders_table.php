@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->uuid();
             $table->text("notes")->nullable();
-            $table->boolean("approved")->default(false);
+            $table->enum("approved", ["pending", "approved", "declined"])->default("pending");
+            $table->foreignUuid("store_uuid");
             $table->timestamps();
         });
     }

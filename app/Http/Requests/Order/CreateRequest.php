@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Order;
 
 use App\Models\Product;
+use App\Rules\CreateStoreRule;
+use App\Rules\OrderItemProductRule;
 use App\Rules\OrderItemQuantityRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -28,9 +30,19 @@ class CreateRequest extends FormRequest
     {
         return [
             "notes" => ["nullable", "string"],
+            "store_uuid" => ["required", new CreateStoreRule()],
             "order_items" => ["required", "array"],
-            "order_items.*.product_uuid" => ["required", Rule::exists(Product::class, "uuid"), new OrderItemQuantityRule()],
-            "order_items.*.quantity" => ["required", "integer"],
+            "order_items.*.product_uuid" => ["required", Rule::exists(Product::class, "uuid")],
+            "order_items.*.quantity" => ["required", "integer", new OrderItemQuantityRule()],
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $user = request("user");
+
+        if ($user->hasRole("staff")) {
+            $this->merge(["store_uuid" => $user->store->uuid]);
+        }
     }
 }

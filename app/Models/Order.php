@@ -16,8 +16,14 @@ class Order extends Model
 
     protected $fillable = [
         "notes",
-        "approved"
+        "approved",
+        "store_uuid"
     ];
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 
     public function order_items()
     {

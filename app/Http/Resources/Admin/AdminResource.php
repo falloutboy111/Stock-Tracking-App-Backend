@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Http\Resources\Store\StoreResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AdminResource extends JsonResource
@@ -20,6 +21,7 @@ class AdminResource extends JsonResource
             "last_name" => $this->last_name,
             "username" => $this->username,
             "brands" => $this->brand,
+            "store" => StoreResource::collection($this->store),
         ];
     }
 }

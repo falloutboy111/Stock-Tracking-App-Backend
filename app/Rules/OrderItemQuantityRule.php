@@ -2,6 +2,8 @@
 
 namespace App\Rules;
 
+use App\Models\OrderItem;
+use App\Models\Store;
 use Illuminate\Contracts\Validation\Rule;
 
 class OrderItemQuantityRule implements Rule
@@ -25,12 +27,38 @@ class OrderItemQuantityRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $order_items = collect(request("order_items"));
+        $user = request("user");
 
-        $quantity = $order_items->where(["product_uuid" => $value]);
+        $store = Store::where(["uuid" => request("store_uuid")])->first() ?? null;
 
-        print_r($order_items);
-        die;
+        if (!$store) {
+            return false;
+        }
+
+        $existing_amount = 0;
+
+        if (filled($store->order)) {
+            foreach ($store->order as $order) {
+
+                if ($order->approved != "approved") {
+                    continue;
+                }
+
+                foreach ($order->order_items as $item) {
+                    $existing_amount += $item->quantity;
+                }
+            }
+        }
+
+        $store_amount = $store->product_group->limit;
+
+        $compair_amount = $existing_amount + $value;
+
+        if ($compair_amount > $store_amount) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -40,6 +68,6 @@ class OrderItemQuantityRule implements Rule
      */
     public function message()
     {
-        return 'Quantity exceded for this product.';
+        return 'Quantity exceded for this store.';
     }
 }

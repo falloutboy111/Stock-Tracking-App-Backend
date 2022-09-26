@@ -15,13 +15,19 @@ class OrderItem extends Model
     protected $keyType = "string";
 
     protected $fillable = [
+        "uuid",
         "order_uuid",
         "product_uuid",
         "quantity"
     ];
 
-    public function order_items()
+    public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

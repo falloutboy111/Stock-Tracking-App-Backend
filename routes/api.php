@@ -39,10 +39,11 @@ Route::group(['middleware' => ['role:super-admin|admin']], function () {
     Route::apiResource("/staff", StaffManage::class);
     Route::apiResource("/product", ProductsManage::class);
     Route::apiResource("/product-group", GroupManage::class);
+    Route::apiResource("/order", OrderManage::class, ["only" => ["update"]]);
 });
 
 Route::group(['middleware' => ['role:super-admin|admin|staff']], function () {
-    Route::apiResource("/order", OrderManage::class);
+    Route::apiResource("/order", OrderManage::class, ["only" => ["store", "index", "show"]]);
 });
 
 Route::post("/user/login", [AuthController::class, "login"]);

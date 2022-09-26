@@ -31,6 +31,11 @@ class Store extends Model
         return $this->belongsToMany(Staff::class, null, "store_uuid", "staff_uuid", "uuid", "uuid", "uuid");
     }
 
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function product_group()
     {
         return $this->belongsTo(ProductGroup::class);

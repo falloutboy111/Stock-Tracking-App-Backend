@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Staff;
 
+use App\Http\Resources\Brand\BrandResource;
+use App\Http\Resources\Store\StoreResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StaffResource extends JsonResource
@@ -19,8 +21,8 @@ class StaffResource extends JsonResource
             "first_name" => $this->first_name,
             "last_name" => $this->last_name,
             "username" => $this->username,
-            "store" => $this->store,
-            "brands" => $this->brand,
+            "store" => StoreResource::collection($this->store),
+            "brands" => BrandResource::collection($this->brand),
         ];
     }
 }
