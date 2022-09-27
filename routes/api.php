@@ -42,6 +42,7 @@ Route::group(['middleware' => ['role:super-admin|admin']], function () {
     Route::apiResource("/product-group", GroupManage::class);
     Route::apiResource("/order", OrderManage::class, ["only" => ["update"]]);
     Route::get("/order/export/{order_id}", [OrderManage::class, "export"]);
+    Route::get("/order/email/{order_id}", [OrderManage::class, "email"]);
 });
 
 Route::group(['middleware' => ['role:super-admin|admin|staff']], function () {
@@ -51,3 +52,4 @@ Route::group(['middleware' => ['role:super-admin|admin|staff']], function () {
 });
 
 Route::post("/user/login", [AuthController::class, "login"]);
+Route::post("/user/logout", [AuthController::class, "logout"]);

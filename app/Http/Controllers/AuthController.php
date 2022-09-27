@@ -12,4 +12,9 @@ class AuthController extends Controller
     {
         return response(new LoginResource($request->user_obj()), 200);
     }
+
+    public function logout()
+    {
+        return response("");
+    }
 }

@@ -91,4 +91,15 @@ class Manage extends Controller
 
         return Excel::download(new OrderExport($order), 'order.csv', \Maatwebsite\Excel\Excel::CSV);
     }
+
+    public function email($id) 
+    {
+        if (!$order = Order::find($id)) {
+            return response("Record not found", 410);
+        }
+
+        // $path = Excel::store(new OrderExport($order), 'order.csv');
+
+        return response("");
+    }
 }
