@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Mall;
+namespace App\Http\Resources\Region;
 
-use App\Http\Resources\Region\RegionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MallResource extends JsonResource
+class RegionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,8 +17,7 @@ class MallResource extends JsonResource
         return [
             "uuid" => $this->uuid,
             "name" => $this->name,
-            "stores" => $this->store,
-            "region" => new RegionResource($this->region),
+            "name_pretty" =>  $this->name_pretty
         ];
     }
 }

@@ -30,8 +30,7 @@ class CreateRequest extends FormRequest
     {
         return [
             "name" => ["required", "string", Rule::unique(Store::class)],
-            "malls" => ["nullable", "array"],
-            "malls.*" => ["required", "uuid", Rule::exists(Mall::class, "uuid")],
+            "mall_uuid" => ["required", "uuid", Rule::exists(Mall::class, "uuid")],
             "product_group_uuid" => ["required", Rule::exists(ProductGroup::class, "uuid")]
         ];
     }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id()->index();
             $table->uuid()->index()->unique()->onDelete('restrict');
             $table->string("name")->unique();
+            $table->foreignUuid("region_uuid");
             $table->timestamps();
         });
     }

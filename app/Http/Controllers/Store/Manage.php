@@ -33,8 +33,6 @@ class Manage extends Controller
 
         $store = Store::create($validated);
 
-        $store->mall()->attach($validated["malls"]);
-
         return response(new StoreResource($store), 201);
     }
 

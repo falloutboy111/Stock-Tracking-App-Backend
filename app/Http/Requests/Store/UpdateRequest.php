@@ -38,8 +38,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             "name" => ["nullable", "string", new UpdateNameRule($this->store_object)],
-            "malls" => ["nullable", "array"],
-            "malls.*" => ["required", "uuid", Rule::exists(Mall::class, "uuid")],
+            "mall_uuid" => ["nullable", "uuid", Rule::exists(Mall::class, "uuid")],
             "product_group_uuid" => ["required", Rule::exists(ProductGroup::class, "uuid")]
         ];
     }

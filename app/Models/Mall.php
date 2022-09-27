@@ -16,11 +16,17 @@ class Mall extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        "name"
+        "name",
+        "region_uuid",
     ];
 
     public function store()
     {
         return $this->belongsToMany(Store::class);
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
     }
 }

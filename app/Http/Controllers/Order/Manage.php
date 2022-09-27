@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Order;
 
+use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\CreateRequest;
 use App\Http\Requests\Order\UpdateRequest;
@@ -10,6 +11,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Manage extends Controller
 {
@@ -79,5 +81,14 @@ class Manage extends Controller
         $order->update($validated);
 
         return response("");
+    }
+
+    public function export($id) 
+    {
+        if (!$order = Order::find($id)) {
+            return response("Record not found", 410);
+        }
+
+        return Excel::download(new OrderExport($order), 'order.csv', \Maatwebsite\Excel\Excel::CSV);
     }
 }

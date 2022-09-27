@@ -34,6 +34,7 @@ class CreateRequest extends FormRequest
             "order_items" => ["required", "array"],
             "order_items.*.product_uuid" => ["required", Rule::exists(Product::class, "uuid")],
             "order_items.*.quantity" => ["required", "integer", new OrderItemQuantityRule()],
+            "status" => ["required", Rule::in(["Pending"])],
         ];
     }
 
@@ -44,5 +45,7 @@ class CreateRequest extends FormRequest
         if ($user->hasRole("staff")) {
             $this->merge(["store_uuid" => $user->store->uuid]);
         }
+
+        $this->merge(["status" => "Pending"]);
     }
 }

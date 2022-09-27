@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Store;
 
+use App\Http\Resources\Mall\MallResource;
 use App\Http\Resources\ProductGroup\ProductGroupResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,7 @@ class StoreResource extends JsonResource
         return [
             "uuid" => $this->uuid,
             "name" => $this->name,
-            "mall" => $this->mall,
+            "mall" => new MallResource($this->mall),
             "staff" => $this->staff,
             "product_group" => new ProductGroupResource($this->product_group),
         ];

@@ -40,7 +40,7 @@ class OrderItemQuantityRule implements Rule
         if (filled($store->order)) {
             foreach ($store->order as $order) {
 
-                if ($order->approved != "approved") {
+                if ($order->status != "approved") {
                     continue;
                 }
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Mall\Manage as MallManage;
 use App\Http\Controllers\Order\Manage as OrderManage;
 use App\Http\Controllers\Products\GroupManage;
 use App\Http\Controllers\Products\Manage as ProductsManage;
+use App\Http\Controllers\Region\Manage as RegionManage;
 use App\Http\Controllers\Staff\Manage as StaffManage;
 use App\Http\Controllers\Store\Manage as StoreManage;
 use Illuminate\Http\Request;
@@ -40,10 +41,13 @@ Route::group(['middleware' => ['role:super-admin|admin']], function () {
     Route::apiResource("/product", ProductsManage::class);
     Route::apiResource("/product-group", GroupManage::class);
     Route::apiResource("/order", OrderManage::class, ["only" => ["update"]]);
+    Route::get("/order/export/{order_id}", [OrderManage::class, "export"]);
 });
 
 Route::group(['middleware' => ['role:super-admin|admin|staff']], function () {
     Route::apiResource("/order", OrderManage::class, ["only" => ["store", "index", "show"]]);
+
+    Route::get("/region", [RegionManage::class, "get"]);
 });
 
 Route::post("/user/login", [AuthController::class, "login"]);

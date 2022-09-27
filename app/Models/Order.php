@@ -16,7 +16,7 @@ class Order extends Model
 
     protected $fillable = [
         "notes",
-        "approved",
+        "status",
         "store_uuid"
     ];
 

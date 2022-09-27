@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Mall;
 
 use App\Models\Mall;
+use App\Models\Region;
 use App\Rules\UpdateNameRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -36,6 +37,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             "name" => ["nullable", "string", new UpdateNameRule($this->mall_object)],
+            "region_uuid" => ["required", Rule::exists(Region::class, "uuid")]
         ];
     }
 

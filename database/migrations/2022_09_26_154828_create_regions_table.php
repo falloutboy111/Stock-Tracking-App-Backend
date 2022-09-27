@@ -13,12 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('regions', function (Blueprint $table) {
             $table->id();
-            $table->uuid();
-            $table->text("notes")->nullable();
-            $table->enum("status", ["Pending", "Approved", "Declined"]);
-            $table->foreignUuid("store_uuid");
+            $table->uuid()->index();
+            $table->enum("name", [
+                "eastern_cape",
+                "free_state",
+                "gauteng",
+                "kzn",
+                "limpopo",
+                "mpumalanga",
+                "northern_cape",
+                "north_west",
+                "western_cape"
+            ])->unique();
             $table->timestamps();
         });
     }
@@ -30,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('regions');
     }
 };

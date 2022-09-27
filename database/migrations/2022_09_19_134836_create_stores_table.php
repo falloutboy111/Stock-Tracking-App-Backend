@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id()->index();
             $table->uuid()->index()->unique()->OnDelete('restrict');
             $table->string("name");
+            $table->foreignUuid("mall_uuid");
             $table->foreignUuid("product_group_uuid");
             $table->timestamps();
         });

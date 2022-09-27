@@ -32,7 +32,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            "approved" => ["required", Rule::in(["pending", "approved", "declined"])]
+            "status" => ["required", Rule::in(["Approved", "Declined"])]
         ];
     }
 

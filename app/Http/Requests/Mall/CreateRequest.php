@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Mall;
 
 use App\Models\Mall;
+use App\Models\Region;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -27,6 +28,7 @@ class CreateRequest extends FormRequest
     {
         return [
             "name" => ["required", "string", Rule::unique(Mall::class)],
+            "region_uuid" => ["required", Rule::exists(Region::class, "uuid")]
         ];
     }
 }

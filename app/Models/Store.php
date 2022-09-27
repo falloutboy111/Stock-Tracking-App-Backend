@@ -17,13 +17,13 @@ class Store extends Model
 
     protected $fillable = [
         "name",
-        "mall_id",
+        "mall_uuid",
         "product_group_uuid",
     ];
 
     public function mall()
     {
-        return $this->belongsToMany(Mall::class, null, "store_uuid", "mall_uuid", "uuid", "uuid", "uuid");
+        return $this->belongsTo(Mall::class);
     }
 
     public function staff()
