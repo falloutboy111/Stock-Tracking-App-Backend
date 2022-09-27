@@ -21,7 +21,7 @@ class StaffResource extends JsonResource
             "first_name" => $this->first_name,
             "last_name" => $this->last_name,
             "username" => $this->username,
-            "store" => StoreResource::collection($this->store),
+            "stores" => StoreResource::collection($this->store),
             "brands" => BrandResource::collection($this->brand),
         ];
     }

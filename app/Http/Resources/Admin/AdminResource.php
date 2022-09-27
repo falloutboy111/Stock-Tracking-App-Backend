@@ -21,7 +21,7 @@ class AdminResource extends JsonResource
             "last_name" => $this->last_name,
             "username" => $this->username,
             "brands" => $this->brand,
-            "store" => StoreResource::collection($this->store),
+            "stores" => StoreResource::collection($this->store),
         ];
     }
 }

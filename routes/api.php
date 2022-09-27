@@ -25,8 +25,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['role:super-admin']], function () {
+    Route::get("/super-user", [Manage::class, "current_user"]);
     Route::apiResource("/admin", Manage::class);
     Route::apiResource("/brand", BrandManage::class, ["only" => ["store", "update", "delete"]]);
+    Route::apiResource("/product", ProductsManage::class);
+    Route::apiResource("/product-group", GroupManage::class);
+    Route::apiResource("/mall", MallManage::class);
+    Route::apiResource("/store", StoreManage::class);
 });
 
 
@@ -35,12 +40,11 @@ Route::group(['middleware' => ['role:super-admin|admin']], function () {
 
     Route::get("/admin-user", [Manage::class, "current_user"]);
     // Route::apiResource("/brand", BrandManage::class);
-    Route::apiResource("/mall", MallManage::class);
-    Route::apiResource("/store", StoreManage::class);
     Route::apiResource("/staff", StaffManage::class);
-    Route::apiResource("/product", ProductsManage::class);
-    Route::apiResource("/product-group", GroupManage::class);
-    Route::apiResource("/order", OrderManage::class, ["only" => ["update"]]);
+    Route::apiResource("/product", ProductsManage::class, ["only" => ["index", "show"]]);
+    Route::apiResource("/order", OrderManage::class);
+    Route::apiResource("/mall", MallManage::class,  ["only" => ["index", "show"]]);
+    Route::apiResource("/store", StoreManage::class,  ["only" => ["index", "show"]]);
     Route::get("/order/export/{order_id}", [OrderManage::class, "export"]);
     Route::get("/order/email/{order_id}", [OrderManage::class, "email"]);
 });
@@ -49,6 +53,7 @@ Route::group(['middleware' => ['role:super-admin|admin|staff']], function () {
     Route::apiResource("/order", OrderManage::class, ["only" => ["store", "index", "show"]]);
 
     Route::get("/region", [RegionManage::class, "get"]);
+
 });
 
 Route::post("/user/login", [AuthController::class, "login"]);

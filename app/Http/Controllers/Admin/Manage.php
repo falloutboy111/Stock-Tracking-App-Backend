@@ -74,8 +74,12 @@ class Manage extends Controller
     {
         $validated = $request->validated();
 
-        if ($validated["password"]) {
+        $password = $validated["password"] ?? null;
+
+        if ($password) {
             $validated["password"] = Hash::make($validated["password"]);
+        } else {
+            unset($validated["password"]);
         }
 
         $user = $request->user_object();
@@ -94,8 +98,6 @@ class Manage extends Controller
             $user->store()->detach();
 
             $user->store()->attach($validated["stores"]);
-        } elseif (!filled($validated["stores"])) {
-            $user->store()->detach();
         }
 
         return response(new AdminResource($user));

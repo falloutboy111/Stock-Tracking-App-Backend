@@ -104,8 +104,6 @@ class Manage extends Controller
             $staff->store()->detach();
 
             $staff->store()->attach($validated["stores"]);
-        } elseif (!filled($stores)) {
-            $staff->store()->detach();
         }
 
         return response(new StaffResource($staff));
