@@ -18,7 +18,7 @@ class LearningContent extends Model
 
     protected $fillable = [
         "order",
-        "content",
+        "material_uuid",
         "learning_chapter_uuid",
         "test_uuid",
     ];
@@ -31,5 +31,10 @@ class LearningContent extends Model
     public function test()
     {
         return $this->belongsTo(Test::class, "test_uuid", "uuid");
+    }
+
+    public function material()
+    {
+        return $this->hasMany(LearningMaterial::class);
     }
 }

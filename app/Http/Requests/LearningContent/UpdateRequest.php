@@ -35,7 +35,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            "content" => ["nullable", "string"],
+            "material_uuid" => ["nullable", "string"],
             "learning_chapter_uuid" => ["required", "uuid", Rule::exists(LearningChapter::class, "uuid")],
             "test_uuid" => ["nullable", "uuid", Rule::exists(Test::class, "uuid"), new CheckContentTestRule(), Rule::unique(LearningContent::class, "test_uuid")],
         ];

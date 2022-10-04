@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\Brand\Manage as BrandManage;
 use App\Http\Controllers\Learning\ChapterController;
 use App\Http\Controllers\Learning\ContentController;
+use App\Http\Controllers\Learning\MaterialController;
 use App\Http\Controllers\Learning\ModuleController;
 use App\Http\Controllers\Staff\Manage;
 use App\Http\Controllers\Test\QuestionController;
@@ -49,7 +50,8 @@ Route::group(['middleware' => ['role:super-admin|manager']], function () {
 
 
     Route::apiResource("/elearn/learning/module", ModuleController::class);
-    Route::apiResource("/elearn/learning/chapter", ChapterController::class);
+    Route::apiResource("/elearn/learning/material", MaterialController::class);
+    Route::apiResource("/elearn/learning/{module_id}/chapter", ChapterController::class);
     Route::apiResource("/elearn/learning/content", ContentController::class)->parameters([
         'content' => 'id',
     ]);

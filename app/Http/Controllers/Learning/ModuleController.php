@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Learning;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LearningContent\UpdateRequest;
+use App\Http\Requests\LearningModule\UpdateRequest;
 use App\Http\Requests\LearningModule\CreateRequest;
 use App\Http\Resources\Learning\ModuleResource;
 use App\Models\LearningModule;

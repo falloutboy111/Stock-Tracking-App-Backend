@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid()->index();
             $table->integer("order");
-            $table->longText("content")->nullable();
+            $table->foreignUuid("material_uuid")->index()->nullable();
             $table->foreignUuid("learning_chapter_uuid");
             $table->foreignUuid("test_uuid")->index()->nullable();
             $table->timestamps();

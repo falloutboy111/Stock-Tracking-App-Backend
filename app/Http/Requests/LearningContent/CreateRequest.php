@@ -29,7 +29,7 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            "content" => ["required_without:test_uuid", "string"],
+            "material_uuid" => ["required_without:test_uuid", "string"],
             "learning_chapter_uuid" => ["required", "uuid", Rule::exists(LearningChapter::class, "uuid")],
             "test_uuid" => ["required_without:content", "uuid", Rule::exists(Test::class, "uuid"), new CheckContentTestRule(), Rule::unique(LearningContent::class, "test_uuid")],
         ];

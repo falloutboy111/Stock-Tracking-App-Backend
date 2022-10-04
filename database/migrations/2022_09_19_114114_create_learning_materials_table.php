@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('learning_chapters', function (Blueprint $table) {
+        Schema::create('learning_materials', function (Blueprint $table) {
             $table->id();
             $table->uuid()->index();
-            $table->string("title");
-            $table->integer("chapter");
-            $table->foreignUuid("learning_module_uuid");
-            $table->foreignUuid("test_uuid")->nullable();
+            $table->longText("content");
+            $table->integer("section_number");
+            $table->boolean("is_image");
+            $table->string("image_src");
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('learning_chapters');
+        Schema::dropIfExists('learning_materials');
     }
 };

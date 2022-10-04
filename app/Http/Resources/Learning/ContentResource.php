@@ -18,7 +18,7 @@ class ContentResource extends JsonResource
         return [
             "uuid" => $this->uuid,
             "order" => $this->order,
-            "content" => $this->content,
+            "content" => $this->material,
             "test" => new TestResource($this->test),
         ];
     }

@@ -17,6 +17,7 @@ class ModuleResource extends JsonResource
         return [
             "uuid" => $this->uuid,
             "title" => $this->title,
+            "chapters" => ChapterResource::collection($this->chapter)
         ];
     }
 }

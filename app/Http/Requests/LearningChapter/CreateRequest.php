@@ -3,6 +3,7 @@
 namespace App\Http\Requests\LearningChapter;
 
 use App\Models\LearningModule;
+use App\Models\Test;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,6 +29,14 @@ class CreateRequest extends FormRequest
         return [
             "title" => ["required", "string"],
             "learning_module_uuid" => ["required", "uuid", Rule::exists(LearningModule::class, "uuid")],
+            "test_uuid" => ["nullable", "uuid", Rule::exists(Test::class, "uuid")],
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            "learning_module_uuid" => request("module_id"),
+        ]);
     }
 }

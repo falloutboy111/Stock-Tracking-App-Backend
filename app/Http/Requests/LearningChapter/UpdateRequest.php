@@ -3,7 +3,9 @@
 namespace App\Http\Requests\LearningChapter;
 
 use App\Models\LearningChapter;
+use App\Models\Test;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -33,11 +35,13 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            "title" => ["required", "string"],
+            "title" => ["nullable", "string"],
+            "test_uuid" => ["nullable", "uuid", Rule::exists(Test::class, "uuid")],
         ];
     }
 
-    public function get_chapter(){
+    public function get_chapter()
+    {
         return $this->chapter;
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Resources\Learning;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ChapterResource extends JsonResource
+class MaterialResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,12 @@ class ChapterResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "uuid" => $this->uuid,
-            "title" => $this->title,
-            "content" => ContentResource::collection($this->content),
+            "id" => $this->uuid, 
+            "content" => $this->content,
+            "section_number" => $this->section_number,
+            "is_image" => $this->is_image,
+            "image_src" => $this->image_src,
+            "test_question" => $this->test_question,
         ];
     }
 }

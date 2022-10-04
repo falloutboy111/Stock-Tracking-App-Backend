@@ -3,24 +3,22 @@
 namespace App\Http\Controllers\Learning;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LearningChapter\CreateRequest;
-use App\Http\Requests\LearningChapter\UpdateRequest;
-use App\Http\Resources\Learning\ChapterResource;
-use App\Models\LearningChapter;
+use App\Http\Requests\LearningMaterial\CreateRequest;
+use App\Http\Requests\LearningMaterial\UpdateRequest;
+use App\Http\Resources\Learning\MaterialResource;
+use App\Models\LearningMaterial;
 use Illuminate\Http\Request;
 
-class ChapterController extends Controller
+class MaterialController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $learning_chapter = LearningChapter::where(["learning_module_uuid" => $id])->get();
-
-        return response(ChapterResource::collection($learning_chapter));
+        return response(MaterialResource::collection(LearningMaterial::get()));
     }
 
     /**
@@ -33,9 +31,9 @@ class ChapterController extends Controller
     {
         $validated = $request->validated();
 
-        $learning_chapter = LearningChapter::create($validated);
+        $learning_material = LearningMaterial::create($validated);
 
-        return response(new ChapterResource($learning_chapter), 201);
+        return response(new MaterialResource($learning_material), 201);
     }
 
     /**
@@ -44,13 +42,13 @@ class ChapterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($learning_module_uuid, $id)
+    public function show($id)
     {
-        if (!$learning_chapter = LearningChapter::where(["learning_module_uuid" => $learning_module_uuid, "uuid" => $id])->first()) {
+        if (!$material = LearningMaterial::find($id)) {
             return response("", 410);
         }
 
-        return response(new ChapterResource($learning_chapter));
+        return response(new MaterialResource($material));
     }
 
     /**
@@ -64,11 +62,11 @@ class ChapterController extends Controller
     {
         $validated = $request->validated();
 
-        $chapter = $request->get_chapter();
+        $material = $request->getLearningMaterial();
 
-        $chapter->update($validated);
+        $material->update($validated);
 
-        return response("", 200);
+        return response("");
     }
 
     /**
@@ -77,13 +75,13 @@ class ChapterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($learning_module_uuid, $id)
+    public function destroy($id)
     {
-        if (!$learning_chapter = LearningChapter::where(["learning_module_uuid" => $learning_module_uuid, "uuid" => $id])->first()) {
+        if (!$material = LearningMaterial::find($id)) {
             return response("", 410);
         }
 
-        $learning_chapter->delete();
+        $material->delete();
 
         return response("", 204);
     }
